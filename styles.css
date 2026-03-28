@@ -1,0 +1,212 @@
+/* Georgian Keyboard Converter - Suggestion Box Styles */
+
+#georgian-suggestion-box {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(135deg, #f7f9fc 0%, #e8f4f8 100%);
+  border: 1px solid #c5d9e2;
+  border-radius: 12px;
+  padding: 0;
+  margin: 0;
+  box-shadow: 
+    0 8px 32px rgba(106, 151, 168, 0.15),
+    0 4px 16px rgba(106, 151, 168, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(8px);
+  max-width: 400px;
+  min-width: 280px;
+  animation: georgianSuggestionFadeIn 0.3s ease-out;
+  z-index: 10000;
+  position: fixed;
+}
+
+@keyframes georgianSuggestionFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.georgian-suggestion-content {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.georgian-suggestion-text {
+  color: #2c5f2d;
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+  min-width: 180px;
+  line-height: 1.4;
+}
+
+.georgian-suggestion-text strong {
+  color: #1e4620;
+  font-weight: 600;
+  background: rgba(139, 195, 74, 0.15);
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(139, 195, 74, 0.2);
+}
+
+.georgian-replace-btn {
+  background: linear-gradient(135deg, #8bc34a 0%, #7cb342 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 
+    0 2px 8px rgba(139, 195, 74, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
+
+.georgian-replace-btn:hover {
+  background: linear-gradient(135deg, #7cb342 0%, #689f38 100%);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 12px rgba(139, 195, 74, 0.4),
+    0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.georgian-replace-btn:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 6px rgba(139, 195, 74, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.georgian-dismiss-btn {
+  background: rgba(255, 255, 255, 0.8);
+  color: #64748b;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.georgian-dismiss-btn:hover {
+  background: rgba(248, 250, 252, 0.95);
+  color: #475569;
+  border-color: rgba(148, 163, 184, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.georgian-dismiss-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 480px) {
+  #georgian-suggestion-box {
+    max-width: calc(100vw - 20px);
+    min-width: 260px;
+    left: 10px !important;
+    right: 10px;
+    width: auto;
+  }
+  
+  .georgian-suggestion-content {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+  
+  .georgian-suggestion-text {
+    font-size: 13px;
+    min-width: 160px;
+  }
+  
+  .georgian-replace-btn {
+    padding: 7px 14px;
+    font-size: 12px;
+  }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  #georgian-suggestion-box {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-color: #475569;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 4px 16px rgba(0, 0, 0, 0.2),
+      0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .georgian-suggestion-text {
+    color: #a7f3d0;
+  }
+  
+  .georgian-suggestion-text strong {
+    color: #6ee7b7;
+    background: rgba(34, 197, 94, 0.2);
+    border-color: rgba(34, 197, 94, 0.3);
+  }
+  
+  .georgian-replace-btn {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    box-shadow: 
+      0 2px 8px rgba(34, 197, 94, 0.4),
+      0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  .georgian-replace-btn:hover {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    box-shadow: 
+      0 4px 12px rgba(34, 197, 94, 0.5),
+      0 2px 6px rgba(0, 0, 0, 0.25);
+  }
+  
+  .georgian-dismiss-btn {
+    background: rgba(51, 65, 85, 0.8);
+    color: #94a3b8;
+    border-color: rgba(71, 85, 105, 0.5);
+  }
+  
+  .georgian-dismiss-btn:hover {
+    background: rgba(64, 84, 104, 0.95);
+    color: #cbd5e1;
+    border-color: rgba(71, 85, 105, 0.7);
+  }
+}
+
+/* Accessibility improvements */
+.georgian-replace-btn:focus,
+.georgian-dismiss-btn:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Animation for better UX */
+@keyframes georgianSuggestionPulse {
+  0%, 100% {
+    border-color: rgba(139, 195, 74, 0.3);
+  }
+  50% {
+    border-color: rgba(139, 195, 74, 0.6);
+  }
+}
+
+#georgian-suggestion-box.georgian-highlight {
+  animation: georgianSuggestionPulse 1.5s ease-in-out infinite;
+}
