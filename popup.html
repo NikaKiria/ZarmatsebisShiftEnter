@@ -66,6 +66,18 @@
             left: 0;
         }
         
+        .instructions strong {
+            color: #2c5f2d;
+            font-size: 13px;
+            font-weight: 600;
+            display: block;
+            margin: 12px 0 6px 0;
+        }
+        
+        .instructions strong:first-child {
+            margin-top: 0;
+        }
+        
         .example {
             background: rgba(248, 250, 252, 0.8);
             padding: 8px 12px;
@@ -90,16 +102,23 @@
         </div>
         
         <div class="instructions">
-            <div class="instruction-item">Type in any text field on websites</div>
+            <strong>On Webpages:</strong>
+            <div class="instruction-item">Type in any text field</div>
             <div class="instruction-item">Look for the glowing lamp 💡 when Georgian is detected</div>
             <div class="instruction-item">Click the lamp to see English suggestion</div>
-            <div class="instruction-item">Click "Replace" to convert instantly</div>
+            
+            <strong>In Chrome Search Bar:</strong>
+            <div class="instruction-item">Type "geo" + space + Georgian text</div>
+            <div class="instruction-item">Select the conversion from suggestions</div>
         </div>
         
         <div class="example">
-            Example:<br>
-            Type: "ჰელლო წორლდ" → See: 💡<br>
-            Click lamp → Get: "hello world"
+            <strong>Webpage:</strong><br>
+            Type: "დჰელლო ჟორლდ" → See: 💡<br>
+            Click lamp → Get: "hello world"<br><br>
+            <strong>Search Bar:</strong><br>
+            Type: "geo ჰელლო ჟორლდ"<br>
+            Select → Search: "hello world"
         </div>
     </div>
 </body>

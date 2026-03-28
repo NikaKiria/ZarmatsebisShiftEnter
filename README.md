@@ -8,6 +8,7 @@ A Chrome Extension that detects when you accidentally type English words using a
 - 🔄 **Smart Conversion**: Maps Georgian characters to their corresponding English keys based on QWERTY layout positions  
 - 💡 **Subtle Lamp Indicator**: Shows a gentle glowing lamp 💡 icon when Georgian text is detected
 - 🖱️ **Click-to-Convert**: Click the lamp icon to see the full English suggestion 
+- 🔍 **Chrome Search Bar**: Use "geo" keyword in Chrome address bar for instant conversion
 - ⚡ **Debounced Performance**: Uses 200ms debounce to prevent lag during typing
 - 🎨 **Beautiful UI**: Ghibli-inspired soft color palette with modern design
 - 🌓 **Dark Mode Support**: Automatically adapts to system theme preferences
@@ -27,6 +28,7 @@ English:  q w e r t y u i o p a s d f g h j k l z x c v b n m
 - `სჰე მადე დეცისიონ` → `she made decision`
 - `ჰელლო ჟორლდ` → `hello world`
 - `ეჰის ის ა ეესე` → `this is a test`
+- **Chrome search bar**: `geo ჰელლო ჟორლდ` → Search for "hello world"
 
 ## Installation
 
@@ -45,16 +47,24 @@ English:  q w e r t y u i o p a s d f g h j k l z x c v b n m
 
 ## Usage
 
+### On Webpages
 1. **Type normally** in any text input field on websites
 2. **Lamp appears** 💡 A subtle glowing lamp icon appears when Georgian characters are detected  
 3. **Click to convert** Click the lamp icon to see the English suggestion
 4. **Convert instantly** Click the "Replace" button to convert, or dismiss with the X button
 
+### In Chrome Search Bar  
+1. **Type keyword** Type "geo" followed by a space in Chrome's address bar
+2. **Add Georgian text** Type your Georgian text (e.g., "geo ჰელლო ჟორლდ")
+3. **Select suggestion** Choose from the conversion suggestions that appear
+4. **Search or navigate** Press Enter to search or navigate with the converted English text
+
 ## File Structure
 
 ```
 ├── manifest.json          # Extension configuration and permissions
-├── content.js            # Main logic for detection and conversion
+├── content.js            # Main logic for webpage detection and conversion
+├── background.js         # Chrome search bar (omnibox) functionality
 ├── styles.css            # Modern styling with Ghibli-inspired colors
 ├── popup.html            # Extension popup interface
 └── README.md            # This file
@@ -82,6 +92,8 @@ The conversion is based on the standard Georgian QWERTY keyboard layout, mapping
 The extension requires minimal permissions:
 - `activeTab`: To access content on the currently active tab
 - `scripting`: To inject the content script for text detection
+- `storage`: To store user preferences (future feature)
+- `omnibox`: To provide Chrome search bar functionality with "geo" keyword
 
 ## Privacy
 
