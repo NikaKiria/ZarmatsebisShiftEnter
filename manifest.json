@@ -1,18 +1,30 @@
 {
   "manifest_version": 3,
-  "name": "Zarmacebis ShiftEnter",
+  "name": "Georgian to English Keyboard Converter",
   "version": "1.0",
   "description": "Georgian to English Keyboard Converter _ Detects Georgian keyboard input and suggests English corrections",
   "permissions": [
     "activeTab",
     "scripting",
-    "storage"
+    "storage",
+    "notifications",
+    "clipboardWrite",
+    "clipboardRead"
   ],
   "background": {
     "service_worker": "background.js"
   },
   "omnibox": {
     "keyword": "geo"
+  },
+  "commands": {
+    "convert-georgian": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+G",
+        "mac": "Command+Shift+G"
+      },
+      "description": "Convert Georgian text to English"
+    }
   },
   "content_scripts": [
     {
