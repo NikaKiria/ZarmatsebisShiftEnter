@@ -36,6 +36,63 @@ function normalizeEnglishText(text) {
   return text.toLowerCase().trim();
 }
 
+// Convert to English function for context menu
+function convertToEnglish(text) {
+  if (!text || !containsGeorgian(text)) return text;
+  return normalizeEnglishText(convertGeorgianToEnglish(text));
+}
+
+// Create context menu on extension startup
+chrome.runtime.onStartup.addListener(() => {
+  createContextMenu();
+});
+
+chrome.runtime.onInstalled.addListener(() => {
+  createContextMenu();
+});
+
+function createContextMenu() {
+  chrome.contextMenus.removeAll(() => {
+    chrome.contextMenus.create({
+      id: 'fix-georgian-layout',
+      title: 'Fix Georgian Layout',
+      contexts: ['selection']
+    });
+  });
+}
+
+// Handle context menu clicks
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === 'fix-georgian-layout' && info.selectionText) {
+    const selectedText = info.selectionText;
+    
+    if (containsGeorgian(selectedText)) {
+      const convertedText = convertToEnglish(selectedText);
+      
+      // Open Google search with converted text
+      chrome.search.query({
+        text: convertedText,
+        disposition: 'NEW_TAB'
+      });
+      
+      // Show notification
+      chrome.notifications.create({
+        type: 'basic',
+        iconUrl: 'icon128.png',
+        title: 'Georgian Layout Fixed!',
+        message: `"${selectedText}" → "${convertedText}"\nOpened Google search in new tab.`
+      });
+    } else {
+      chrome.notifications.create({
+        type: 'basic',
+        iconUrl: 'icon128.png',
+        title: 'No Georgian Text',
+        message: 'Selected text contains no Georgian characters.'
+      });
+    }
+  }
+});
+
 // Handle omnibox input changes
 chrome.omnibox.onInputChanged.addListener((text, suggest) => {
   const suggestions = [];
@@ -163,6 +220,43 @@ chrome.commands.onCommand.addListener(async (command) => {
           message: 'Press Ctrl+Shift+X when focused on a text field, or copy Georgian text to clipboard first.'
         });
       }
+    }
+  } else if (command === 'fix-and-search') {
+    // Handle fix-and-search command
+    try {
+      const clipboardText = await navigator.clipboard.readText();
+      
+      if (clipboardText && containsGeorgian(clipboardText)) {
+        const converted = convertToEnglish(clipboardText);
+        
+        // Open Google search with converted text
+        chrome.search.query({
+          text: converted,
+          disposition: 'NEW_TAB'
+        });
+        
+        chrome.notifications.create({
+          type: 'basic',
+          iconUrl: 'icon128.png',
+          title: 'Fixed & Searching!',
+          message: `"${clipboardText}" → "${converted}"\nOpened Google search in new tab.`
+        });
+      } else {
+        chrome.notifications.create({
+          type: 'basic',
+          iconUrl: 'icon128.png',
+          title: 'Fix & Search',
+          message: 'Copy Georgian text to clipboard first, then press Ctrl+Shift+F.'
+        });
+      }
+    } catch (error) {
+      console.error('Error with fix-and-search command:', error);
+      chrome.notifications.create({
+        type: 'basic',
+        iconUrl: 'icon128.png',
+        title: 'Fix & Search',
+        message: 'Copy Georgian text to clipboard and try Ctrl+Shift+F again.'
+      });
     }
   }
 });

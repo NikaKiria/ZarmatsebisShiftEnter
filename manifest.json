@@ -9,7 +9,9 @@
     "storage",
     "notifications",
     "clipboardWrite",
-    "clipboardRead"
+    "clipboardRead",
+    "contextMenus",
+    "search"
   ],
   "background": {
     "service_worker": "background.js"
@@ -24,6 +26,13 @@
         "mac": "Command+Shift+X"
       },
       "description": "Convert Georgian text to English"
+    },
+    "fix-and-search": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "Command+Shift+F"
+      },
+      "description": "Fix Georgian layout and search"
     }
   },
   "content_scripts": [
