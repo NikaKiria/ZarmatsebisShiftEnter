@@ -1,5 +1,55 @@
-/* Georgian Keyboard Converter - Suggestion Box Styles */
+/* Georgian Keyboard Converter - Suggestion Box and Lamp Icon Styles */
 
+/* Lamp Icon Styles */
+#georgian-lamp-icon {
+  font-size: 20px;
+  cursor: pointer;
+  padding: 6px;
+  background: linear-gradient(135deg, #fff9c4 0%, #ffeaa7 100%);
+  border: 2px solid #fdcb6e;
+  border-radius: 50%;
+  box-shadow: 
+    0 4px 12px rgba(253, 203, 110, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  animation: georgianLampGlow 2s ease-in-out infinite alternate;
+  transition: all 0.2s ease;
+  z-index: 10000;
+  position: fixed;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+#georgian-lamp-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 
+    0 6px 16px rgba(253, 203, 110, 0.4),
+    0 3px 8px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #fff3a0 0%, #fdcb6e 100%);
+}
+
+#georgian-lamp-icon:active {
+  transform: scale(0.95);
+}
+
+@keyframes georgianLampGlow {
+  0% {
+    box-shadow: 
+      0 4px 12px rgba(253, 203, 110, 0.3),
+      0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    box-shadow: 
+      0 6px 16px rgba(253, 203, 110, 0.5),
+      0 3px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Suggestion Box Styles */
 #georgian-suggestion-box {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   background: linear-gradient(135deg, #f7f9fc 0%, #e8f4f8 100%);
@@ -118,6 +168,15 @@
 
 /* Responsive design for mobile */
 @media (max-width: 480px) {
+  /* Lamp icon mobile adjustments */
+  #georgian-lamp-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+    padding: 4px;
+  }
+  
+  /* Suggestion box mobile adjustments */
   #georgian-suggestion-box {
     max-width: calc(100vw - 20px);
     min-width: 260px;
@@ -144,6 +203,18 @@
 
 /* Dark theme support */
 @media (prefers-color-scheme: dark) {
+  /* Lamp icon dark theme */
+  #georgian-lamp-icon {
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+    border-color: #f6e05e;
+    color: #f6e05e;
+  }
+  
+  #georgian-lamp-icon:hover {
+    background: linear-gradient(135deg, #4a5568 0%, #718096 100%);
+  }
+  
+  /* Suggestion box dark theme */
   #georgian-suggestion-box {
     background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
     border-color: #475569;

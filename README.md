@@ -6,11 +6,13 @@ A Chrome Extension that detects when you accidentally type English words using a
 
 - 🔍 **Automatic Detection**: Monitors text input fields and detects Georgian characters
 - 🔄 **Smart Conversion**: Maps Georgian characters to their corresponding English keys based on QWERTY layout positions  
-- 💡 **Non-intrusive Suggestions**: Shows a clean floating suggestion box instead of auto-replacing
+- 💡 **Subtle Lamp Indicator**: Shows a gentle glowing lamp 💡 icon when Georgian text is detected
+- 🖱️ **Click-to-Convert**: Click the lamp icon to see the full English suggestion 
 - ⚡ **Debounced Performance**: Uses 200ms debounce to prevent lag during typing
 - 🎨 **Beautiful UI**: Ghibli-inspired soft color palette with modern design
 - 🌓 **Dark Mode Support**: Automatically adapts to system theme preferences
-- 📱 **Mobile Responsive**: Works well on mobile browsers
+- 📱 **Mobile Responsive**: Click interaction works well on mobile browsers
+- 😌 **Non-intrusive**: Respects users who intentionally want to write in Georgian
 
 ## How It Works
 
@@ -44,9 +46,9 @@ English:  q w e r t y u i o p a s d f g h j k l z x c v b n m
 ## Usage
 
 1. **Type normally** in any text input field on websites
-2. **Georgian detected?** A suggestion box will appear when Georgian characters are found
-3. **Convert instantly** by clicking the "Replace" button in the suggestion box
-4. **Dismiss suggestions** by clicking the X button or clicking elsewhere
+2. **Lamp appears** 💡 A subtle glowing lamp icon appears when Georgian characters are detected  
+3. **Click to convert** Click the lamp icon to see the English suggestion
+4. **Convert instantly** Click the "Replace" button to convert, or dismiss with the X button
 
 ## File Structure
 

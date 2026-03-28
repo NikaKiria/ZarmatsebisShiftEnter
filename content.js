@@ -1,14 +1,14 @@
 // Georgian to English keyboard mapping based on QWERTY key positions
 const georgianToEnglish = {
   // Lowercase mappings
-  'ქ': 'q', 'წ': 'w', 'ე': 'e', 'რ': 'r', 'ტ': 't', 'ყ': 'y', 'უ': 'u', 'ი': 'i', 'ო': 'o', 'პ': 'p',
+  'ქ': 'q', 'წ': 'w', 'ე': 'e', 'რ': 'r', 'ყ': 'y', 'უ': 'u', 'ი': 'i', 'ო': 'o', 'პ': 'p',
   'ა': 'a', 'ს': 's', 'დ': 'd', 'ფ': 'f', 'გ': 'g', 'ჰ': 'h', 'ჯ': 'j', 'კ': 'k', 'ლ': 'l',
-  'ზ': 'z', 'ხ': 'x', 'ც': 'c', 'ვ': 'v', 'ბ': 'b', 'ნ': 'n', 'მ': 'm',
+  'ზ': 'z', 'ხ': 'x', 'ც': 'c', 'ვ': 'v', 'ბ': 'b', 'ნ': 'n', 'მ': 'm',  'თ': 't',
   
   // Uppercase/Shift mappings
   'ღ': 'Q', 'ჭ': 'W', 'ჱ': 'E', 'ჲ': 'R', 'ტ': 'T', 'ყ': 'Y', 'ჳ': 'U', 'ჴ': 'I', 'ჵ': 'O', 'ჶ': 'P',
   'ჷ': 'A', 'შ': 'S', 'ჸ': 'D', 'ჹ': 'F', 'ღ': 'G', 'ჰ': 'H', 'ჯ': 'J', 'კ': 'K', 'ლ': 'L',
-  'ჟ': 'Z', 'ხ': 'X', 'ჩ': 'C', 'წ': 'V', 'ჭ': 'B', 'ჼ': 'N', 'ჽ': 'M',
+  'ჟ': 'Z', 'ხ': 'X', 'ჩ': 'C', 'ჭ': 'B', 'ჼ': 'N', 'ჽ': 'M',
   
   // Numbers and symbols (common ones)
   '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '0': '0',
@@ -40,6 +40,53 @@ function containsGeorgian(text) {
 // Convert Georgian text to English based on keyboard layout
 function convertGeorgianToEnglish(text) {
   return text.split('').map(char => georgianToEnglish[char] || char).join('');
+}
+
+// Create lamp icon
+function createLampIcon(originalText, suggestedText, inputElement) {
+  // Remove any existing lamp or suggestion box
+  removeLampIcon();
+  removeSuggestionBox();
+  
+  const lampIcon = document.createElement('div');
+  lampIcon.id = 'georgian-lamp-icon';
+  lampIcon.innerHTML = '💡';
+  lampIcon.title = 'Click to see English suggestion';
+  
+  // Position the lamp icon
+  const rect = inputElement.getBoundingClientRect();
+  lampIcon.style.position = 'fixed';
+  lampIcon.style.top = `${rect.top + window.scrollY - 5}px`;
+  lampIcon.style.left = `${rect.right + window.scrollX + 5}px`;
+  lampIcon.style.zIndex = '10000';
+  
+  document.body.appendChild(lampIcon);
+  
+  // Store data for later use
+  lampIcon.dataset.original = originalText;
+  lampIcon.dataset.suggested = suggestedText;
+  lampIcon.inputElement = inputElement;
+  
+  // Click event to show full suggestion
+  lampIcon.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    createSuggestionBox(originalText, suggestedText, inputElement);
+    removeLampIcon();
+  });
+  
+  // Auto-dismiss after 8 seconds
+  setTimeout(() => {
+    removeLampIcon();
+  }, 8000);
+}
+
+// Remove lamp icon
+function removeLampIcon() {
+  const existingLamp = document.getElementById('georgian-lamp-icon');
+  if (existingLamp) {
+    existingLamp.remove();
+  }
 }
 
 // Create suggestion box
@@ -106,6 +153,12 @@ function removeSuggestionBox() {
   }
 }
 
+// Remove both lamp and suggestion box
+function removeAllGeorgianElements() {
+  removeLampIcon();
+  removeSuggestionBox();
+}
+
 // Handle input events
 function handleInput(event) {
   const inputElement = event.target;
@@ -115,14 +168,14 @@ function handleInput(event) {
   if (text && containsGeorgian(text)) {
     const englishVersion = convertGeorgianToEnglish(text);
     
-    // Only show suggestion if the conversion results in different text
+    // Only show lamp icon if the conversion results in different text
     // and if the English version seems like actual English words
     if (englishVersion !== text && isLikelyEnglish(englishVersion)) {
-      createSuggestionBox(text, englishVersion, inputElement);
+      createLampIcon(text, englishVersion, inputElement);
     }
   } else {
-    // Remove suggestion box if no Georgian characters
-    removeSuggestionBox();
+    // Remove all Georgian elements if no Georgian characters
+    removeAllGeorgianElements();
   }
 }
 
@@ -167,22 +220,28 @@ function init() {
     subtree: true
   });
   
-  // Remove suggestion box when clicking elsewhere
+  // Remove Georgian elements when clicking elsewhere
   document.addEventListener('click', (event) => {
     const suggestionBox = document.getElementById('georgian-suggestion-box');
+    const lampIcon = document.getElementById('georgian-lamp-icon');
+    
     if (suggestionBox && !suggestionBox.contains(event.target)) {
       removeSuggestionBox();
     }
+    
+    if (lampIcon && !lampIcon.contains(event.target) && event.target !== lampIcon) {
+      removeLampIcon();
+    }
   });
   
-  // Remove suggestion box when scrolling
+  // Remove Georgian elements when scrolling
   window.addEventListener('scroll', () => {
-    removeSuggestionBox();
+    removeAllGeorgianElements();
   });
   
-  // Remove suggestion box when window is resized
+  // Remove Georgian elements when window is resized
   window.addEventListener('resize', () => {
-    removeSuggestionBox();
+    removeAllGeorgianElements();
   });
 }
 

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Georgian to English Keyboard Converter",
+  "name": "Zarmacebis ShiftEnter",
   "version": "1.0",
-  "description": "Detects Georgian keyboard input and suggests English corrections",
+  "description": "Georgian to English Keyboard Converter _ Detects Georgian keyboard input and suggests English corrections",
   "permissions": [
     "activeTab",
     "scripting"
@@ -20,8 +20,8 @@
     "default_title": "Georgian Keyboard Converter"
   },
   "icons": {
-    "16": "icon16.png",
-    "48": "icon48.png",
+    "16": "icon128.png",
+    "48": "icon128.png",
     "128": "icon128.png"
   }
 }
