@@ -42,8 +42,32 @@ function convertGeorgianToEnglish(text) {
   return text.split('').map(char => georgianToEnglish[char] || char).join('');
 }
 
+// Normalize English text (lowercase and clean)
+function normalizeEnglishText(text) {
+  return text.toLowerCase().trim();
+}
+
+// Get text width for positioning
+function getTextWidth(text, inputElement) {
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  const style = window.getComputedStyle(inputElement);
+  context.font = `${style.fontSize} ${style.fontFamily}`;
+  return context.measureText(text).width;
+}
+
 // Create lamp icon
 function createLampIcon(originalText, suggestedText, inputElement) {
+  // Check if lamp already exists with same suggestion
+  const existingLamp = document.getElementById('georgian-lamp-icon');
+  if (existingLamp && 
+      existingLamp.dataset.suggested === suggestedText &&
+      existingLamp.inputElement === inputElement) {
+    // Update position in case text changed
+    updateLampPosition(existingLamp, inputElement);
+    return;
+  }
+  
   // Remove any existing lamp or suggestion box
   removeLampIcon();
   removeSuggestionBox();
@@ -53,12 +77,8 @@ function createLampIcon(originalText, suggestedText, inputElement) {
   lampIcon.innerHTML = '💡';
   lampIcon.title = 'Click to see English suggestion';
   
-  // Position the lamp icon
-  const rect = inputElement.getBoundingClientRect();
-  lampIcon.style.position = 'fixed';
-  lampIcon.style.top = `${rect.top + window.scrollY - 5}px`;
-  lampIcon.style.left = `${rect.right + window.scrollX + 5}px`;
-  lampIcon.style.zIndex = '10000';
+  // Position the lamp icon at the end of the text
+  updateLampPosition(lampIcon, inputElement);
   
   document.body.appendChild(lampIcon);
   
@@ -75,16 +95,50 @@ function createLampIcon(originalText, suggestedText, inputElement) {
     removeLampIcon();
   });
   
-  // Auto-dismiss after 8 seconds
-  setTimeout(() => {
+  // Add scroll/resize event listeners to update lamp position\n  const updatePosition = () => updateLampPosition(lampIcon, inputElement);\n  window.addEventListener('scroll', updatePosition, { passive: true });\n  window.addEventListener('resize', updatePosition, { passive: true });\n  \n  // Store cleanup function\n  lampIcon.cleanup = () => {\n    window.removeEventListener('scroll', updatePosition);\n    window.removeEventListener('resize', updatePosition);\n    clearTimeout(lampIcon.dismissTimeout);\n  };\n  \n  // Auto-dismiss after 12 seconds (increased time)
+  clearTimeout(lampIcon.dismissTimeout);
+  lampIcon.dismissTimeout = setTimeout(() => {
     removeLampIcon();
-  }, 8000);
+  }, 12000);
+}
+
+// Update lamp position based on text content
+function updateLampPosition(lampIcon, inputElement) {
+  const rect = inputElement.getBoundingClientRect();
+  const text = inputElement.value;
+  
+  let textWidth;
+  try {
+    textWidth = getTextWidth(text, inputElement);
+  } catch (e) {
+    // Fallback positioning if text measurement fails
+    textWidth = text.length * 8; // rough estimate
+  }
+  
+  // Calculate position at the end of text, above it
+  const padding = 8; // account for input padding
+  const maxWidth = rect.width - 40; // leave some margin
+  const actualTextWidth = Math.min(textWidth, maxWidth);
+  
+  // Ensure lamp doesn't go off-screen
+  const lampLeft = rect.left + window.scrollX + padding + actualTextWidth;
+  const screenWidth = window.innerWidth;
+  const finalLeft = Math.min(lampLeft, screenWidth - 30); // 30px margin from screen edge
+  
+  lampIcon.style.position = 'fixed';
+  lampIcon.style.top = `${rect.top + window.scrollY - 25}px`;
+  lampIcon.style.left = `${finalLeft}px`;
+  lampIcon.style.zIndex = '10000';
 }
 
 // Remove lamp icon
 function removeLampIcon() {
   const existingLamp = document.getElementById('georgian-lamp-icon');
   if (existingLamp) {
+    // Clean up event listeners and timers
+    if (existingLamp.cleanup) {
+      existingLamp.cleanup();
+    }
     existingLamp.remove();
   }
 }
@@ -166,12 +220,15 @@ function handleInput(event) {
   
   // Check if text contains Georgian characters
   if (text && containsGeorgian(text)) {
-    const englishVersion = convertGeorgianToEnglish(text);
+    const englishVersion = normalizeEnglishText(convertGeorgianToEnglish(text));
     
     // Only show lamp icon if the conversion results in different text
     // and if the English version seems like actual English words
-    if (englishVersion !== text && isLikelyEnglish(englishVersion)) {
+    if (englishVersion !== text.toLowerCase() && isLikelyEnglish(englishVersion)) {
       createLampIcon(text, englishVersion, inputElement);
+    } else {
+      // Remove lamp if the conversion doesn't make sense
+      removeLampIcon();
     }
   } else {
     // Remove all Georgian elements if no Georgian characters

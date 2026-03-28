@@ -2,17 +2,17 @@
 
 /* Lamp Icon Styles */
 #georgian-lamp-icon {
-  font-size: 20px;
+  font-size: 14px;
   cursor: pointer;
-  padding: 6px;
+  padding: 4px;
   background: linear-gradient(135deg, #fff9c4 0%, #ffeaa7 100%);
-  border: 2px solid #fdcb6e;
+  border: 1.5px solid #fdcb6e;
   border-radius: 50%;
   box-shadow: 
-    0 4px 12px rgba(253, 203, 110, 0.3),
-    0 2px 6px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(8px);
-  animation: georgianLampGlow 2s ease-in-out infinite alternate;
+    0 3px 8px rgba(253, 203, 110, 0.25),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6px);
+  animation: georgianLampGlow 2.5s ease-in-out infinite alternate;
   transition: all 0.2s ease;
   z-index: 10000;
   position: fixed;
@@ -20,32 +20,32 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 22px;
+  height: 22px;
 }
 
 #georgian-lamp-icon:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
   box-shadow: 
-    0 6px 16px rgba(253, 203, 110, 0.4),
-    0 3px 8px rgba(0, 0, 0, 0.15);
+    0 4px 10px rgba(253, 203, 110, 0.35),
+    0 2px 5px rgba(0, 0, 0, 0.15);
   background: linear-gradient(135deg, #fff3a0 0%, #fdcb6e 100%);
 }
 
 #georgian-lamp-icon:active {
-  transform: scale(0.95);
+  transform: scale(0.9);
 }
 
 @keyframes georgianLampGlow {
   0% {
     box-shadow: 
-      0 4px 12px rgba(253, 203, 110, 0.3),
-      0 2px 6px rgba(0, 0, 0, 0.1);
+      0 3px 8px rgba(253, 203, 110, 0.25),
+      0 1px 3px rgba(0, 0, 0, 0.1);
   }
   100% {
     box-shadow: 
-      0 6px 16px rgba(253, 203, 110, 0.5),
-      0 3px 8px rgba(0, 0, 0, 0.15);
+      0 4px 10px rgba(253, 203, 110, 0.4),
+      0 2px 5px rgba(0, 0, 0, 0.15);
   }
 }
 
@@ -170,10 +170,10 @@
 @media (max-width: 480px) {
   /* Lamp icon mobile adjustments */
   #georgian-lamp-icon {
-    width: 28px;
-    height: 28px;
-    font-size: 16px;
-    padding: 4px;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    padding: 3px;
   }
   
   /* Suggestion box mobile adjustments */
