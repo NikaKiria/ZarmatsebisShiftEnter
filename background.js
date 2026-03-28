@@ -152,7 +152,7 @@ chrome.commands.onCommand.addListener(async (command) => {
             type: 'basic',
             iconUrl: 'icon128.png',
             title: 'No Georgian Text',
-            message: 'No Georgian characters found in clipboard. Copy Georgian text and try Ctrl+Shift+G again.'
+            message: 'No Georgian characters found in clipboard. Copy Georgian text and try Ctrl+Shift+X again.'
           });
         }
       } catch (clipError) {
@@ -160,7 +160,7 @@ chrome.commands.onCommand.addListener(async (command) => {
           type: 'basic',
           iconUrl: 'icon128.png',
           title: 'Keyboard Shortcut',
-          message: 'Press Ctrl+Shift+G when focused on a text field, or copy Georgian text to clipboard first.'
+          message: 'Press Ctrl+Shift+X when focused on a text field, or copy Georgian text to clipboard first.'
         });
       }
     }

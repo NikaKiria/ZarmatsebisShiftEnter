@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Georgian to English Keyboard Converter",
+  "name": "Zarmacebis ShiftEnter",
   "version": "1.0",
   "description": "Georgian to English Keyboard Converter _ Detects Georgian keyboard input and suggests English corrections",
   "permissions": [
@@ -20,8 +20,8 @@
   "commands": {
     "convert-georgian": {
       "suggested_key": {
-        "default": "Ctrl+Shift+G",
-        "mac": "Command+Shift+G"
+        "default": "Ctrl+Shift+X",
+        "mac": "Command+Shift+X"
       },
       "description": "Convert Georgian text to English"
     }

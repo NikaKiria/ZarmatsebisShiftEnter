@@ -8,7 +8,7 @@ A Chrome Extension that detects when you accidentally type English words using a
 - 🔄 **Smart Conversion**: Maps Georgian characters to their corresponding English keys based on QWERTY layout positions  
 - 💡 **Subtle Lamp Indicator**: Shows a gentle glowing lamp 💡 icon when Georgian text is detected
 - 🖱️ **Click-to-Convert**: Click the lamp icon to see the full English suggestion 
-- ⌨️ **Keyboard Shortcut**: Press Ctrl+Shift+G (Cmd+Shift+G on Mac) for instant conversion
+- ⌨️ **Keyboard Shortcut**: Press Ctrl+Shift+X (Cmd+Shift+X on Mac) for instant conversion
 - 🔍 **Chrome Search Bar**: Use "geo" keyword in Chrome address bar for instant conversion
 - ⚡ **Debounced Performance**: Uses 200ms debounce to prevent lag during typing
 - 🎨 **Beautiful UI**: Ghibli-inspired soft color palette with modern design
@@ -29,7 +29,7 @@ English:  q w e r t y u i o p a s d f g h j k l z x c v b n m
 - `სჰე მადე დეცისიონ` → `she made decision`
 - `ჰელლო ჟორლდ` → `hello world`
 - `ეჰის ის ა ეესე` → `this is a test`
-- **Keyboard shortcut**: Ctrl+Shift+G on any Georgian text
+- **Keyboard shortcut**: Ctrl+Shift+X on any Georgian text
 - **Chrome search bar**: `geo ჰელლო ჟორლდ` → Search for "hello world"
 
 ## Installation
@@ -57,7 +57,7 @@ English:  q w e r t y u i o p a s d f g h j k l z x c v b n m
 
 ### Keyboard Shortcut (Recommended)
 1. **Focus or select** Georgian text anywhere (text fields, selected text, or copy to clipboard)
-2. **Press Ctrl+Shift+G** (Cmd+Shift+G on Mac) 
+2. **Press Ctrl+Shift+X** (Cmd+Shift+X on Mac) 
 3. **Instant conversion** Text gets converted immediately with a notification
 4. **Works everywhere** Including Chrome address bar via clipboard
 
