@@ -28,11 +28,11 @@ English:  q w e r t y u i o p a s d f g h j k l z x c v b n m
 
 ### Example Conversions
 - `სჰე მადე დეცისიონ` → `she made decision`
-- `ჰელლო ჟორლდ` → `hello world`
-- `ეჰის ის ა ეესე` → `this is a test`
+- `ჰელლო წორლდ` → `hello world`
+- `ტჰის ის ა ტესტ` → `this is a test`
 - **Context menu**: Select text → Right-click → "Fix Georgian Layout" → Google search
 - **Keyboard shortcuts**: Ctrl+Shift+X (convert) or Ctrl+Shift+F (search)
-- **Chrome search bar**: `geo ჰელლო ჟორლდ` → Search for "hello world"
+- **Chrome search bar**: `geo ჰელლო წორლდ` → Search for "hello world"
 
 ## Installation
 
