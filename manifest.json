@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Zarmacebis ShiftEnter",
+  "name": "Zarmacebis ShiftAlt",
   "version": "1.0",
   "description": "Georgian to English Keyboard Converter _ Detects Georgian keyboard input and suggests English corrections",
   "permissions": [
