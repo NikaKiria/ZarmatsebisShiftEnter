@@ -143,18 +143,33 @@ function removeLampIcon() {
   }
 }
 
+// Truncate long text for better display
+function truncateText(text, maxLength = 120) {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength - 3) + '...';
+}
+
 // Create suggestion box
 function createSuggestionBox(originalText, suggestedText, inputElement) {
   // Remove any existing suggestion box
   removeSuggestionBox();
   
+  const truncatedSuggestion = truncateText(suggestedText);
+  const wasTruncated = truncatedSuggestion !== suggestedText;
+  
   const suggestionBox = document.createElement('div');
   suggestionBox.id = 'georgian-suggestion-box';
   suggestionBox.innerHTML = `
     <div class="georgian-suggestion-content">
-      <span class="georgian-suggestion-text">Did you mean: <strong>${suggestedText}</strong>?</span>
-      <button class="georgian-replace-btn" data-original="${originalText}" data-suggested="${suggestedText}">Replace</button>
-      <button class="georgian-dismiss-btn">✕</button>
+      <div class="georgian-suggestion-text">
+        Did you mean: 
+        <strong title="${wasTruncated ? suggestedText : ''}">${truncatedSuggestion}</strong>?
+        ${wasTruncated ? '<span class="georgian-truncated-hint">hover to see full text</span>' : ''}
+      </div>
+      <div class="georgian-suggestion-buttons">
+        <button class="georgian-replace-btn" data-original="${originalText}" data-suggested="${suggestedText}">Replace</button>
+        <button class="georgian-dismiss-btn">✕</button>
+      </div>
     </div>
   `;
   

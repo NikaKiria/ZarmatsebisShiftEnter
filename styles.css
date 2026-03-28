@@ -62,8 +62,8 @@
     0 4px 16px rgba(106, 151, 168, 0.08),
     0 2px 8px rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(8px);
-  max-width: 400px;
-  min-width: 280px;
+  max-width: 450px;
+  min-width: 320px;
   animation: georgianSuggestionFadeIn 0.3s ease-out;
   z-index: 10000;
   position: fixed;
@@ -72,7 +72,7 @@
 @keyframes georgianSuggestionFadeIn {
   0% {
     opacity: 0;
-    transform: translateY(-10px) scale(0.95);
+    transform: translateY(-8px) scale(0.96);
   }
   100% {
     opacity: 1;
@@ -81,36 +81,49 @@
 }
 
 .georgian-suggestion-content {
-  padding: 16px 20px;
+  padding: 18px 20px;
   display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .georgian-suggestion-text {
   color: #2c5f2d;
   font-size: 14px;
   font-weight: 500;
-  flex: 1;
-  min-width: 180px;
-  line-height: 1.4;
+  line-height: 1.5;
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .georgian-suggestion-text strong {
   color: #1e4620;
   font-weight: 600;
   background: rgba(139, 195, 74, 0.15);
-  padding: 2px 6px;
+  padding: 3px 8px;
   border-radius: 6px;
-  border: 1px solid rgba(139, 195, 74, 0.2);
+  border: 1px solid rgba(139, 195, 74, 0.25);
+  display: inline-block;
+  margin: 2px 0;
+  max-width: 100%;
+  word-break: break-word;
+  cursor: help;
+}
+
+.georgian-truncated-hint {
+  font-size: 11px;
+  color: #64748b;
+  font-style: italic;
+  margin-left: 6px;
+  opacity: 0.8;
 }
 
 .georgian-replace-btn {
   background: linear-gradient(135deg, #8bc34a 0%, #7cb342 100%);
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 18px;
   border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
@@ -120,6 +133,7 @@
     0 2px 8px rgba(139, 195, 74, 0.3),
     0 1px 3px rgba(0, 0, 0, 0.1);
   white-space: nowrap;
+  min-width: 80px;
 }
 
 .georgian-replace-btn:hover {
@@ -141,9 +155,9 @@
   background: rgba(255, 255, 255, 0.8);
   color: #64748b;
   border: 1px solid rgba(148, 163, 184, 0.3);
-  width: 28px;
-  height: 28px;
-  border-radius: 7px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   font-size: 14px;
   cursor: pointer;
   display: flex;
@@ -151,6 +165,16 @@
   justify-content: center;
   transition: all 0.2s ease;
   flex-shrink: 0;
+}
+
+.georgian-suggestion-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(196, 213, 226, 0.4);
 }
 
 .georgian-dismiss-btn:hover {
@@ -179,25 +203,25 @@
   /* Suggestion box mobile adjustments */
   #georgian-suggestion-box {
     max-width: calc(100vw - 20px);
-    min-width: 260px;
+    min-width: 280px;
     left: 10px !important;
     right: 10px;
     width: auto;
   }
   
   .georgian-suggestion-content {
-    padding: 14px 16px;
-    gap: 10px;
+    padding: 16px 18px;
+    gap: 12px;
   }
   
   .georgian-suggestion-text {
     font-size: 13px;
-    min-width: 160px;
   }
   
   .georgian-replace-btn {
-    padding: 7px 14px;
+    padding: 8px 16px;
     font-size: 12px;
+    min-width: 70px;
   }
 }
 
@@ -258,6 +282,14 @@
     background: rgba(64, 84, 104, 0.95);
     color: #cbd5e1;
     border-color: rgba(71, 85, 105, 0.7);
+  }
+  
+  .georgian-suggestion-buttons {
+    border-top-color: rgba(71, 85, 105, 0.4);
+  }
+  
+  .georgian-truncated-hint {
+    color: #94a3b8;
   }
 }
 
