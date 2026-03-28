@@ -221,25 +221,6 @@ chrome.commands.onCommand.addListener(async (command) => {
         });
       }
     }
-  } else if (command === 'fix-and-search') {
-    // Handle fix-and-search command by injecting script into active tab
-    try {
-      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-      
-      // Inject script to handle clipboard reading and search
-      await chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        func: handleFixAndSearch
-      });
-    } catch (error) {
-      console.error('Error handling fix-and-search command:', error);
-      chrome.notifications.create({
-        type: 'basic',
-        iconUrl: 'icon128.png',
-        title: 'Fix & Search Error',
-        message: 'Unable to access clipboard. Make sure you have copied Georgian text first.'
-      });
-    }
   }
 });
 
@@ -374,98 +355,5 @@ function handleKeyboardShortcut() {
         style.remove();
       }
     }, 4000);
-  }
-}
-
-// Function to be injected for fix-and-search command
-function handleFixAndSearch() {
-  // Georgian to English mapping
-  const georgianToEnglish = {
-    'ქ': 'q', 'წ': 'w', 'ე': 'e', 'რ': 'r', 'ყ': 'y', 'უ': 'u', 'ი': 'i', 'ო': 'o', 'პ': 'p',
-    'ა': 'a', 'ს': 's', 'დ': 'd', 'ფ': 'f', 'გ': 'g', 'ჰ': 'h', 'ჯ': 'j', 'კ': 'k', 'ლ': 'l',
-    'ზ': 'z', 'ხ': 'x', 'ც': 'c', 'ვ': 'v', 'ბ': 'b', 'ნ': 'n', 'მ': 'm', 'თ': 't',
-    'ღ': 'Q', 'ჭ': 'W', 'ჱ': 'E', 'ჲ': 'R', 'ტ': 'T', 'ყ': 'Y', 'ჳ': 'U', 'ჴ': 'I', 'ჵ': 'O', 'ჶ': 'P',
-    'ჷ': 'A', 'შ': 'S', 'ჸ': 'D', 'ჹ': 'F', 'ღ': 'G', 'ჰ': 'H', 'ჯ': 'J', 'კ': 'K', 'ლ': 'L',
-    'ჟ': 'Z', 'ხ': 'X', 'ჩ': 'C', 'ჭ': 'B', 'ჼ': 'N', 'ჽ': 'M',
-    '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '0': '0',
-    '!': '!', '@': '@', '#': '#', '$': '$', '%': '%', '^': '^', '&': '&', '*': '*', '(': '(', ')': ')',
-    '-': '-', '_': '_', '=': '=', '+': '+', '[': '[', ']': ']', '{': '{', '}': '}',
-    ';': ';', ':': ':', "'": "'", '"': '"', ',': ',', '.': '.', '/': '/', '?': '?',
-    '\\': '\\', '|': '|', '`': '`', '~': '~', '<': '<', '>': '>'
-  };
-
-  function containsGeorgianLocal(text) {
-    return /[\u10A0-\u10FF]/.test(text);
-  }
-
-  function convertGeorgianToEnglishLocal(text) {
-    return text.split('').map(char => georgianToEnglish[char] || char).join('');
-  }
-
-  function normalizeEnglishTextLocal(text) {
-    return text.toLowerCase().trim();
-  }
-
-  // Try to read clipboard and search
-  navigator.clipboard.readText().then(clipboardText => {
-    if (clipboardText && containsGeorgianLocal(clipboardText)) {
-      const converted = normalizeEnglishTextLocal(convertGeorgianToEnglishLocal(clipboardText));
-      
-      // Open Google search in new tab
-      const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(converted)}`;
-      window.open(searchUrl, '_blank');
-      
-      // Show success notification
-      showTemporaryNotification(`Fixed & Searching!\n"${clipboardText}" → "${converted}"\nOpened Google search in new tab.`, 'success');
-    } else {
-      showTemporaryNotification('Copy Georgian text to clipboard first, then press Ctrl+Shift+F.', 'info');
-    }
-  }).catch(error => {
-    console.error('Clipboard access error:', error);
-    showTemporaryNotification('Could not access clipboard. Make sure you have copied Georgian text first.', 'info');
-  });
-
-  // Helper function to show temporary notification
-  function showTemporaryNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-      position: fixed !important;
-      top: 20px !important;
-      right: 20px !important;
-      background: ${type === 'success' ? 'linear-gradient(135deg, #8bc34a 0%, #7cb342 100%)' : 'linear-gradient(135deg, #2196F3 0%, #1976D2 100%)'} !important;
-      color: white !important;
-      padding: 16px 20px !important;
-      border-radius: 8px !important;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
-      z-index: 10001 !important;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-      font-size: 14px !important;
-      max-width: 350px !important;
-      word-wrap: break-word !important;
-      line-height: 1.4 !important;
-      animation: slideInFromRight 0.3s ease-out !important;
-    `;
-    
-    notification.innerHTML = message.replace(/\n/g, '<br>');
-    document.body.appendChild(notification);
-
-    // Add animation styles
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes slideInFromRight {
-        0% { transform: translateX(100%); opacity: 0; }
-        100% { transform: translateX(0); opacity: 1; }
-      }
-    `;
-    document.head.appendChild(style);
-
-    setTimeout(() => {
-      if (notification.parentNode) {
-        notification.remove();
-      }
-      if (style.parentNode) {
-        style.remove();
-      }
-    }, 5000);
   }
 }
